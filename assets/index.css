@@ -405,6 +405,58 @@ body::before {
     text-decoration: underline;
 }
 
+/* Новые стили для danger boxes */
+.danger-box-top,
+.danger-box-bottom {
+    background: rgba(217, 83, 79, 0.15);
+    border: 1px solid rgba(217, 83, 79, 0.5);
+    border-left: clamp(4px, 0.6vw, 5px) solid var(--danger-color);
+    border-radius: clamp(10px, 2vw, 14px);
+    padding: clamp(1rem, 2.5vw, 1.5rem);
+    color: var(--text-primary);
+    box-shadow: 0 4px 16px rgba(217, 83, 79, 0.25);
+    text-align: center;
+    width: calc(100% - 2px);
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+    margin-right: 2px;
+}
+
+.danger-box-top {
+    animation: pulse-danger 2s ease-in-out infinite;
+    margin-bottom: clamp(1rem, 2vw, 1.5rem);
+}
+
+.danger-box-bottom {
+    margin-top: clamp(1rem, 2vw, 1.5rem);
+    margin-bottom: 0;
+}
+
+.danger-box-top strong,
+.danger-box-bottom strong {
+    color: var(--text-primary);
+    font-size: clamp(0.875rem, 1.8vw, 1.05rem);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: clamp(0.4rem, 1vw, 0.6rem);
+    line-height: 1.5;
+    flex-wrap: wrap;
+    text-align: center;
+}
+
+@keyframes pulse-danger {
+    0%, 100% {
+        box-shadow: 0 4px 16px rgba(217, 83, 79, 0.25);
+        border-color: rgba(217, 83, 79, 0.5);
+    }
+    50% {
+        box-shadow: 0 4px 20px rgba(217, 83, 79, 0.4);
+        border-color: rgba(217, 83, 79, 0.7);
+    }
+}
+
 /* Экраны ноутбуков (1025px - 1440px) */
 @media (max-width: 1440px) and (min-width: 1025px) {
     .container {
@@ -421,6 +473,11 @@ body::before {
         padding: 1.5rem;
         margin-bottom: 1.25rem;
     }
+    
+    .danger-box-top,
+    .danger-box-bottom {
+        padding: 1.25rem;
+    }
 }
 
 /* Экраны планшетов (768px - 1024px) */
@@ -431,6 +488,11 @@ body::before {
     
     .pages-container {
         max-height: 550px;
+    }
+    
+    .danger-box-top strong,
+    .danger-box-bottom strong {
+        font-size: 0.95rem;
     }
 }
 
@@ -476,6 +538,22 @@ body::before {
     .template-example {
         padding: 1rem;
         font-size: 0.85rem;
+    }
+    
+    .danger-box-top,
+    .danger-box-bottom {
+        padding: 1rem;
+        margin-bottom: 1rem;
+    }
+    
+    .danger-box-bottom {
+        margin-top: 1rem;
+    }
+    
+    .danger-box-top strong,
+    .danger-box-bottom strong {
+        font-size: 0.9rem;
+        gap: 0.4rem;
     }
 }
 
@@ -574,6 +652,25 @@ body::before {
     .page::-webkit-scrollbar {
         width: 3px;
     }
+    
+    .danger-box-top,
+    .danger-box-bottom {
+        padding: 0.85rem;
+        margin-bottom: 0.75rem;
+        border-radius: 10px;
+        border-left-width: 4px;
+    }
+    
+    .danger-box-bottom {
+        margin-top: 0.75rem;
+    }
+    
+    .danger-box-top strong,
+    .danger-box-bottom strong {
+        font-size: 0.85rem;
+        gap: 0.35rem;
+        line-height: 1.4;
+    }
 }
 
 /* Очень маленькие экраны (до 360px) */
@@ -613,6 +710,18 @@ body::before {
     .template-example {
         font-size: 0.7rem;
     }
+    
+    .danger-box-top,
+    .danger-box-bottom {
+        padding: 0.75rem;
+        border-left-width: 3px;
+    }
+    
+    .danger-box-top strong,
+    .danger-box-bottom strong {
+        font-size: 0.8rem;
+        gap: 0.3rem;
+    }
 }
 
 /* Ландшафтная ориентация на мобильных устройствах */
@@ -649,6 +758,16 @@ body::before {
     .content-section {
         padding: 1rem;
         margin-bottom: 0.75rem;
+    }
+    
+    .danger-box-top,
+    .danger-box-bottom {
+        padding: 0.85rem;
+        margin-bottom: 0.5rem;
+    }
+    
+    .danger-box-bottom {
+        margin-top: 0.5rem;
     }
 }
 
