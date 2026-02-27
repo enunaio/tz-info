@@ -1,0 +1,501 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap');
+
+:root {
+    --bg-0: #0d0d0d;
+    --bg-1: #141414;
+    --bg-2: #1c1c1c;
+    --bg-3: #242424;
+    --line: #2e2e2e;
+    --line-hot: #c75a2a;
+    --text-0: #f0ede8;
+    --text-1: #b8b4ad;
+    --text-2: #7a7671;
+    --orange: #c75a2a;
+    --orange-dim: rgba(199,90,42,0.12);
+    --orange-glow: rgba(199,90,42,0.35);
+    --red: #c23a2e;
+    --red-dim: rgba(194,58,46,0.1);
+    --green: #4caf7d;
+    --green-dim: rgba(76,175,125,0.12);
+    --yellow: #d4924a;
+    --yellow-dim: rgba(212,146,74,0.1);
+}
+
+*, *::before, *::after {
+    margin: 0; padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'IBM Plex Sans', sans-serif;
+    background: var(--bg-0);
+    color: var(--text-0);
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* Фоновая текстура */
+body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+        repeating-linear-gradient(0deg, transparent, transparent 39px, var(--line) 39px, var(--line) 40px),
+        repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(46,46,46,0.4) 39px, rgba(46,46,46,0.4) 40px);
+    opacity: 0.25;
+    pointer-events: none;
+    z-index: 0;
+}
+
+body::after {
+    content: '';
+    position: fixed;
+    top: 0; left: 0;
+    width: 60vw; height: 60vh;
+    background: radial-gradient(ellipse at 10% 10%, rgba(199,90,42,0.06) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* ─── LAYOUT ─── */
+
+.wrapper {
+    position: relative;
+    z-index: 1;
+    max-width: 860px;
+    margin: 0 auto;
+    padding: clamp(1rem, 4vw, 3rem) clamp(1rem, 4vw, 2rem);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    gap: clamp(1.5rem, 3vw, 2.5rem);
+}
+
+/* ─── HEADER ─── */
+
+.header {
+    border-bottom: 1px solid var(--line);
+    padding-bottom: clamp(1rem, 2.5vw, 1.75rem);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    position: relative;
+}
+
+.header::before {
+    content: '';
+    position: absolute;
+    bottom: -1px; left: 0;
+    width: clamp(60px, 15vw, 100px);
+    height: 2px;
+    background: var(--orange);
+}
+
+.header-eyebrow {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: clamp(0.65rem, 1.2vw, 0.75rem);
+    font-weight: 500;
+    color: var(--orange);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+}
+
+.header h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.2rem, 7vw, 4.5rem);
+    font-weight: 400;
+    letter-spacing: 0.04em;
+    color: var(--text-0);
+    line-height: 0.95;
+}
+
+.header h1 span {
+    color: var(--orange);
+}
+
+/* ─── ALERTS STRIP ─── */
+
+.alerts {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+}
+
+.alert-item {
+    display: grid;
+    grid-template-columns: 2px 1fr;
+    gap: 0;
+    background: var(--red-dim);
+    border: 1px solid rgba(194,58,46,0.2);
+    border-radius: 4px;
+    overflow: hidden;
+    animation: alertPulse 3s ease-in-out infinite;
+    animation-delay: var(--d, 0s);
+}
+
+.alert-item::before {
+    content: '';
+    background: var(--red);
+    display: block;
+}
+
+.alert-item-body {
+    padding: clamp(0.7rem, 1.5vw, 1rem) clamp(0.85rem, 2vw, 1.25rem);
+    font-size: clamp(0.88rem, 1.6vw, 0.98rem);
+    line-height: 1.6;
+    color: var(--text-1);
+    font-weight: 400;
+}
+
+.alert-item-body strong {
+    color: #e07070;
+    font-weight: 600;
+}
+
+@keyframes alertPulse {
+    0%, 100% { border-color: rgba(194,58,46,0.2); }
+    50% { border-color: rgba(194,58,46,0.4); }
+}
+
+/* ─── SECTION CARDS ─── */
+
+.section {
+    background: var(--bg-1);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    overflow: hidden;
+    transition: border-color 0.25s;
+}
+
+.section:hover {
+    border-color: rgba(199,90,42,0.25);
+}
+
+.section-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: clamp(0.9rem, 2vw, 1.25rem) clamp(1rem, 2.5vw, 1.5rem);
+    border-bottom: 1px solid var(--line);
+    background: var(--bg-2);
+}
+
+.section-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(1.2rem, 3vw, 1.75rem);
+    color: var(--orange);
+    line-height: 1;
+    min-width: clamp(1.5rem, 3vw, 2rem);
+}
+
+.section-title {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: clamp(1.05rem, 2.2vw, 1.3rem);
+    font-weight: 700;
+    color: var(--text-0);
+    letter-spacing: 0.01em;
+}
+
+.section-body {
+    padding: clamp(1rem, 2.5vw, 1.5rem);
+    display: flex;
+    flex-direction: column;
+    gap: clamp(0.75rem, 1.5vw, 1.1rem);
+}
+
+/* Текст */
+.section-body p,
+.section-body li {
+    font-size: clamp(0.93rem, 1.7vw, 1.05rem);
+    color: var(--text-1);
+    line-height: 1.7;
+}
+
+.section-body strong {
+    color: var(--text-0);
+    font-weight: 600;
+}
+
+.section-body ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    padding-left: 0;
+}
+
+.section-body ul li {
+    padding-left: 1.1em;
+    position: relative;
+}
+
+.section-body ul li::before {
+    content: '›';
+    position: absolute;
+    left: 0;
+    color: var(--orange);
+    font-weight: 700;
+}
+
+/* Подзаголовки внутри секции */
+.section-body h3 {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: clamp(0.8rem, 1.5vw, 0.92rem);
+    font-weight: 600;
+    color: var(--orange);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding-bottom: 0.4rem;
+    border-bottom: 1px dashed var(--line);
+}
+
+/* ─── TEMPLATE BOX ─── */
+
+.template-example {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: clamp(0.85rem, 1.6vw, 1rem);
+    line-height: 2;
+    color: var(--text-0);
+    background: var(--bg-0);
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--orange);
+    border-radius: 4px;
+    padding: clamp(1rem, 2vw, 1.25rem) clamp(1rem, 2vw, 1.5rem);
+    white-space: pre-line;
+    overflow-x: auto;
+    position: relative;
+}
+
+.template-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-2);
+    margin-bottom: 0.5rem;
+}
+
+/* ─── COPY BUTTON ─── */
+
+.copy-template-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    width: 100%;
+    padding: clamp(0.75rem, 2vw, 1rem);
+    background: transparent;
+    border: 1px solid var(--orange);
+    color: var(--orange);
+    border-radius: 4px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: clamp(0.78rem, 1.4vw, 0.88rem);
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+    position: relative;
+    overflow: hidden;
+    touch-action: manipulation;
+    min-height: 44px;
+}
+
+.copy-template-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--orange);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.copy-template-btn:hover {
+    color: var(--bg-0);
+    box-shadow: 0 0 20px var(--orange-glow);
+}
+
+.copy-template-btn:hover::before {
+    transform: scaleX(1);
+}
+
+.copy-template-btn span {
+    position: relative;
+    z-index: 1;
+    transition: color 0.25s;
+}
+
+.copy-template-btn:hover span {
+    color: var(--bg-0);
+}
+
+/* ─── INFO / WARNING BOXES ─── */
+
+.info-box {
+    background: var(--green-dim);
+    border: 1px solid rgba(76,175,125,0.2);
+    border-left: 3px solid var(--green);
+    border-radius: 4px;
+    padding: clamp(0.75rem, 1.5vw, 1rem) clamp(0.9rem, 2vw, 1.25rem);
+    font-size: clamp(0.9rem, 1.6vw, 1rem);
+    color: var(--text-1);
+    line-height: 1.6;
+}
+
+.info-box strong {
+    color: var(--green);
+    font-weight: 600;
+}
+
+.info-box a {
+    color: var(--orange);
+    text-decoration: none;
+    border-bottom: 1px dashed var(--orange);
+    transition: opacity 0.2s;
+}
+
+.info-box a:hover { opacity: 0.75; }
+
+.warning-box {
+    background: var(--yellow-dim);
+    border: 1px solid rgba(212,146,74,0.2);
+    border-left: 3px solid var(--yellow);
+    border-radius: 4px;
+    padding: clamp(0.75rem, 1.5vw, 1rem) clamp(0.9rem, 2vw, 1.25rem);
+    font-size: clamp(0.9rem, 1.6vw, 1rem);
+    color: var(--text-1);
+    line-height: 1.6;
+}
+
+.warning-box strong {
+    color: var(--yellow);
+    font-weight: 600;
+}
+
+.warning-box ul {
+    list-style: none;
+    padding: 0;
+    margin-top: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+.warning-box ul li {
+    padding-left: 1.1em;
+    position: relative;
+    font-size: clamp(0.9rem, 1.6vw, 1rem);
+    color: var(--text-1);
+}
+
+.warning-box ul li::before {
+    content: '›';
+    position: absolute;
+    left: 0;
+    color: var(--yellow);
+    font-weight: 700;
+}
+
+/* ─── COPY FEEDBACK TOAST ─── */
+
+.copy-feedback {
+    position: fixed;
+    top: clamp(12px, 2.5vw, 24px);
+    right: clamp(12px, 2.5vw, 24px);
+    background: var(--bg-2);
+    border: 1px solid var(--green);
+    color: var(--green);
+    padding: clamp(0.6rem, 1.5vw, 0.85rem) clamp(0.9rem, 2vw, 1.5rem);
+    border-radius: 4px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: clamp(0.75rem, 1.4vw, 0.85rem);
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transform: translateY(-120%);
+    opacity: 0;
+    transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease;
+    z-index: 9999;
+    pointer-events: none;
+    box-shadow: 0 8px 32px rgba(76,175,125,0.2);
+    max-width: calc(100vw - 24px);
+}
+
+.copy-feedback.show {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+/* ─── PAGE (only landings, campaigns commented out) ─── */
+
+.page { display: none; }
+.page.active { display: contents; }
+
+/* ─── FOOTER LINE ─── */
+
+.footer-line {
+    border-top: 1px solid var(--line);
+    padding-top: 1.25rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.footer-tag {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.68rem;
+    color: var(--text-2);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+/* ─── SCROLLBAR ─── */
+
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: var(--bg-0); }
+::-webkit-scrollbar-thumb { background: var(--line); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--orange); }
+
+/* ─── RESPONSIVE ─── */
+
+@media (max-width: 600px) {
+    .header h1 { line-height: 1; }
+    .section-body { gap: 0.85rem; }
+}
+
+@media (max-width: 400px) {
+    .wrapper { padding: 0.75rem; }
+}
+
+/* Touch targets */
+@media (hover: none) and (pointer: coarse) {
+    .copy-template-btn { min-height: 52px; }
+    .info-box a { padding: 0.2rem 0; display: inline-block; }
+}
+
+/* Landscape mobile */
+@media (max-height: 480px) and (orientation: landscape) {
+    .wrapper { padding: 0.75rem 1rem; gap: 1.25rem; }
+}
+
+/* ─── ENTRY ANIMATION ─── */
+
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.header { animation: fadeUp 0.5s ease both; }
+.alerts { animation: fadeUp 0.5s 0.1s ease both; }
+.section { animation: fadeUp 0.5s ease both; }
+.section:nth-child(1) { animation-delay: 0.15s; }
+.section:nth-child(2) { animation-delay: 0.22s; }
+.section:nth-child(3) { animation-delay: 0.29s; }
